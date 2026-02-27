@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Robinson — Catamarán & Delfines en Mallorca</title>
+
+  <!-- Bootstrap 5.3.8 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --ink:#0B1220;
+      --ocean:#0B5FAE;
+      --aqua:#34D6D0;
+      --sand:#F3E7D3;
+      --pearl:#F7FAFF;
+      --black:#000;
+
+      --shadow: 0 22px 70px rgba(0,0,0,.20);
+      --shadow-soft: 0 14px 45px rgba(11,18,32,.12);
+      --radius: 22px;
+      --radius2: 28px;
+      --ring: 0 0 0 6px rgba(52,214,208,.18);
+    }
+
+    html{ scroll-behavior:smooth; }
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 520px at 20% -5%, rgba(52,214,208,.16), transparent 60%),
+        radial-gradient(1000px 650px at 85% -10%, rgba(11,95,174,.14), transparent 58%),
+        var(--pearl);
+      overflow-x:hidden;
+    }
+    .font-display{ font-family:"Plus Jakarta Sans", Inter, system-ui; }
+    section{ scroll-margin-top: 92px; }
+
+    /* NAV (simple, premium) */
+    .nav-glass{
+      background: rgba(247,250,255,.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(11,18,32,.08);
+      transition: box-shadow .25s ease, background .25s ease;
+    }
+    .nav-scrolled{
+      box-shadow: 0 16px 40px rgba(11,18,32,.12);
+      background: rgba(247,250,255,.92);
+    }
+    .brand-mark{
+      width: 38px; height: 38px;
+      border-radius: 12px;
+      display:grid; place-items:center;
+      background: linear-gradient(135deg, rgba(11,95,174,.18), rgba(52,214,208,.18));
+      border: 1px solid rgba(11,18,32,.10);
+      position: relative;
+      overflow:hidden;
+    }
+    .brand-mark:before{
+      content:"";
+      position:absolute; inset:-40%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(52,214,208,.55), transparent 46%),
+        radial-gradient(circle at 70% 70%, rgba(11,95,174,.35), transparent 55%);
+      transform: rotate(20deg);
+    }
+    .brand-mark i{ position:relative; }
+
+    /* HERO (cinemático + minimal) */
+    .hero-min{
+      position: relative;
+      min-height: 92vh;
+      padding-top: 92px; /* navbar */
+      display:flex;
+      align-items: end;
+      padding-bottom: 44px;
+      overflow:hidden;
+      background: #06131e;
+    }
+    .hero-bg{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(6,19,30,.12) 0%, rgba(6,19,30,.62) 70%, rgba(6,19,30,.92) 100%),
+        url("https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=2400&q=80")
+        center/cover no-repeat;
+      transform: scale(1.02);
+      filter: saturate(1.06) contrast(1.03);
+    }
+    .hero-bg::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(900px 520px at 20% 15%, rgba(52,214,208,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 10%, rgba(11,95,174,.22), transparent 55%);
+      pointer-events:none;
+    }
+    .hero-content{
+      position:relative;
+      max-width: 680px;
+    }
+    .hero-eyebrow{
+      display:inline-flex;
+      gap:.55rem;
+      align-items:center;
+      padding:.46rem .9rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.86);
+      font-weight: 800;
+      letter-spacing: .01em;
+      font-size: .92rem;
+      backdrop-filter: blur(12px);
+    }
+    .hero-eyebrow span{ color: rgba(52,214,208,.95); }
+    .hero-h1{
+      color:#fff;
+      letter-spacing:-.03em;
+      line-height: .98;
+      margin-top: 14px;
+      margin-bottom: 14px;
+      font-weight: 900;
+      font-size: clamp(2.25rem, 6.8vw, 3.75rem);
+    }
+    .hero-p{
+      color: rgba(255,255,255,.82);
+      font-weight: 650;
+      font-size: 1.06rem;
+      max-width: 55ch;
+      margin-bottom: 18px;
+    }
+    .hero-actions{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .btn-hero-main{
+      border: 0;
+      border-radius: 16px;
+      font-weight: 900;
+      padding: .95rem 1.1rem;
+      color: #06131e;
+      background: linear-gradient(135deg, rgba(52,214,208,.98), rgba(11,95,174,.98));
+      box-shadow: 0 18px 55px rgba(11,95,174,.28);
+    }
+    .btn-hero-main:hover{ transform: translateY(-1px); filter: brightness(1.02); }
+    .hero-link{
+      color: rgba(255,255,255,.90);
+      text-decoration: none;
+      font-weight: 850;
+    }
+    .hero-link:hover{ text-decoration: underline; }
+    .hero-proof{
+      margin-top: 18px;
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      color: rgba(255,255,255,.78);
+      font-weight: 750;
+      font-size: .95rem;
+    }
+    .hero-proof i{ color: rgba(52,214,208,.95); }
+
+    /* SECTION RHYTHM */
+    .section-pad{ padding: 74px 0; }
+    .section-title{
+      letter-spacing:-.02em;
+      line-height:1.08;
+    }
+    .section-lead{
+      color: rgba(11,18,32,.78);
+      max-width: 62ch;
+      font-weight: 600;
+    }
+
+    /* EDITORIAL BLOCK (luxury = air) */
+    .editorial{
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(11,18,32,.08);
+      box-shadow: var(--shadow-soft);
+      overflow:hidden;
+    }
+    .editorial-media{
+      min-height: 340px;
+      background:
+        radial-gradient(900px 480px at 20% 20%, rgba(52,214,208,.18), transparent 60%),
+        radial-gradient(800px 520px at 80% 10%, rgba(11,95,174,.18), transparent 60%),
+        url("https://images.unsplash.com/photo-1528150177508-7cc0c36cda5b?auto=format&fit=crop&w=2200&q=80")
+        center/cover no-repeat;
+    }
+    @media (min-width: 992px){
+      .editorial-media{ min-height: 520px; }
+    }
+    .editorial-body{ padding: 18px; }
+    @media (min-width: 576px){ .editorial-body{ padding: 26px; } }
+
+    .bullet{
+      display:flex; gap:.75rem; align-items:flex-start;
+      padding: 10px 0;
+      border-top: 1px solid rgba(11,18,32,.08);
+    }
+    .bullet:first-child{ border-top: 0; padding-top: 0; }
+    .bullet i{ color: var(--ocean); font-size:1.25rem; line-height:1; margin-top:2px; }
+
+    /* EXPERIENCES (keep xscroll, simplify content) */
+    .xscroll{
+      display:flex;
+      gap: 14px;
+      overflow-x:auto;
+      padding: 6px 2px 14px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .xscroll::-webkit-scrollbar{ height: 10px; }
+    .xscroll::-webkit-scrollbar-thumb{
+      background: rgba(11,18,32,.18);
+      border-radius: 999px;
+    }
+    .xitem{
+      min-width: 86%;
+      scroll-snap-align: start;
+      border-radius: var(--radius2);
+      overflow:hidden;
+      border: 1px solid rgba(11,18,32,.08);
+      box-shadow: var(--shadow-soft);
+      background: rgba(255,255,255,.85);
+    }
+    @media (min-width: 768px){ .xitem{ min-width: 46%; } }
+    @media (min-width: 1200px){ .xitem{ min-width: 28%; } }
+
+    .exp-media{
+      height: 220px;
+      background-size: cover;
+      background-position:center;
+      position:relative;
+    }
+    .exp-media:after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.00), rgba(0,0,0,.45));
+    }
+    .exp-tag{
+      position:absolute; left:14px; bottom:14px; z-index:2;
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.45rem .8rem;
+      border-radius: 999px;
+      background: rgba(247,250,255,.88);
+      border: 1px solid rgba(255,255,255,.45);
+      box-shadow: 0 14px 35px rgba(0,0,0,.18);
+      font-weight: 900;
+      color: var(--ink);
+    }
+    .exp-body{ padding: 16px 16px 18px; }
+    @media (min-width: 576px){ .exp-body{ padding: 18px 18px 20px; } }
+
+    /* ONE CLEAN MID CTA */
+    .cta-clean{
+      border-radius: var(--radius2);
+      padding: 20px;
+      background:
+        radial-gradient(700px 260px at 30% 10%, rgba(52,214,208,.28), transparent 60%),
+        radial-gradient(700px 320px at 90% 0%, rgba(11,95,174,.32), transparent 62%),
+        linear-gradient(135deg, rgba(11,18,32,.95), rgba(11,18,32,.78));
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 22px 60px rgba(11,18,32,.22);
+      overflow:hidden;
+    }
+
+    /* SOCIAL GALLERY (quiet, no extra boxes) */
+    .social-wall{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+    }
+    @media (min-width: 768px){
+      .social-wall{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+    }
+    .social-tile{
+      border-radius: 18px;
+      overflow:hidden;
+      border: 1px solid rgba(11,18,32,.08);
+      box-shadow: 0 12px 30px rgba(11,18,32,.10);
+      position:relative;
+      aspect-ratio: 1 / 1;
+      background: #eaf2ff;
+      transition: transform .25s ease;
+    }
+    .social-tile:hover{ transform: translateY(-2px); }
+    .social-tile .img{
+      position:absolute; inset:0;
+      background-size: cover;
+      background-position:center;
+      filter: saturate(1.05);
+    }
+    .social-tile:after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.42));
+    }
+    .social-meta{
+      position:absolute; left:10px; right:10px; bottom:10px;
+      z-index:2;
+      display:flex; justify-content:space-between; align-items:center;
+      color:#fff;
+      font-weight:900;
+      font-size:.9rem;
+      text-shadow: 0 10px 25px rgba(0,0,0,.35);
+    }
+
+    /* LOCATION + CONTACT = clean cards */
+    .panel{
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.84);
+      border: 1px solid rgba(11,18,32,.08);
+      box-shadow: var(--shadow-soft);
+      overflow:hidden;
+    }
+
+    /* WhatsApp floating */
+    .wa-float{
+      position: fixed;
+      right: 16px;
+      bottom: 86px; /* leaves room for mobile booking bar */
+      z-index: 999;
+      width: 54px; height: 54px;
+      border-radius: 999px;
+      display:grid; place-items:center;
+      background: #25D366;
+      color: #07140b;
+      box-shadow: 0 18px 45px rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.35);
+      text-decoration:none;
+      transition: transform .2s ease;
+    }
+    .wa-float:hover{ transform: translateY(-2px); }
+
+    /* Mobile sticky booking bar */
+    .sticky-book{
+      position: fixed;
+      left: 10px; right: 10px;
+      bottom: 14px;
+      z-index: 998;
+      background: rgba(247,250,255,.92);
+      border: 1px solid rgba(11,18,32,.10);
+      backdrop-filter: blur(14px);
+      border-radius: 18px;
+      box-shadow: 0 18px 50px rgba(11,18,32,.18);
+      padding: 10px;
+      display:flex;
+      gap: 10px;
+      align-items:center;
+    }
+    @media (min-width: 992px){
+      .sticky-book{ display:none; }
+      .wa-float{ bottom: 16px; }
+    }
+    .btn-book{
+      border-radius: 16px;
+      font-weight: 950;
+      border: 0;
+      background: linear-gradient(135deg, rgba(52,214,208,.95), rgba(11,95,174,.95));
+      color: #06131e;
+      padding: .86rem 1rem;
+      flex: 1;
+      box-shadow: 0 12px 30px rgba(11,95,174,.18);
+    }
+    .btn-mini{
+      border-radius: 16px;
+      font-weight: 900;
+      padding: .86rem .95rem;
+      background: rgba(11,18,32,.06);
+      border: 1px solid rgba(11,18,32,.12);
+      color: var(--ink);
+      text-decoration:none;
+      white-space: nowrap;
+    }
+
+    /* Reveal */
+    .reveal{
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.in{ opacity:1; transform: translateY(0); }
+
+    /* Footer */
+    footer{
+      background: linear-gradient(180deg, rgba(11,18,32,.02), rgba(11,18,32,.06));
+      border-top: 1px solid rgba(11,18,32,.08);
+    }
+
+    /* Focus */
+    a:focus, button:focus, .btn:focus, input:focus, select:focus, textarea:focus{
+      outline:none;
+      box-shadow: var(--ring) !important;
+    }
+  </style>
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#topNav" data-bs-root-margin="0px 0px -40%">
+
+  <!-- NAV -->
+  <nav id="topNav" class="navbar navbar-expand-lg fixed-top nav-glass">
+    <div class="container py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#inicio" aria-label="Robinson">
+        <span class="brand-mark">
+          <i class="bi bi-compass" style="font-size:1.05rem;color:var(--ink)"></i>
+        </span>
+        <span class="font-display fw-extrabold" style="letter-spacing:-.02em;">Robinson</span>
+      </a>
+
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navLinks"
+              aria-controls="navLinks" aria-expanded="false" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navLinks">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link fw-semibold" href="#robinson">Robinson Botes</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="#experiencias">Experiencias</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="#social">Redes</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="#ubicacion">Ubicación</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="#contacto">Contacto</a></li>
+
+          <!-- CTA (1/2): nav -->
+          <li class="nav-item ms-lg-2">
+            <a class="btn btn-dark px-3 py-2 rounded-4 fw-bold" href="#contacto">
+              Reservar <i class="bi bi-arrow-right-short"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO (nuevo, limpio) -->
+  <header id="inicio" class="hero-min">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-content reveal">
+        <div class="hero-eyebrow">
+          Mallorca · Catamarán · Delfines · <span>60 años</span>
+        </div>
+
+        <h1 class="hero-h1 font-display">
+          El Mediterráneo, <br>
+          en su versión más elegante.
+        </h1>
+
+        <p class="hero-p">
+          Cuatro experiencias premium. Una firma: Robinson.
+          <b>El amanecer con delfines</b> es nuestro momento icónico.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-hero-main" href="#experiencias">
+            Explorar experiencias <i class="bi bi-arrow-right-short"></i>
+          </a>
+          <a class="hero-link" href="#contacto">
+            Consultar disponibilidad <i class="bi bi-chevron-right"></i>
+          </a>
+        </div>
+
+        <div class="hero-proof">
+          <span><i class="bi bi-shield-check"></i> Tripulación experta</span>
+          <span><i class="bi bi-star-fill"></i> Experiencia estrella: delfines</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ROBINSON BOTES (editorial + aire) -->
+  <section id="robinson" class="section-pad">
+    <div class="container">
+      <div class="row g-4 align-items-stretch">
+        <div class="col-12 col-lg-6 reveal">
+          <div class="editorial h-100">
+            <div class="editorial-body">
+              <h2 class="font-display fw-extrabold section-title mb-2">
+                Robinson Botes, tradición con estética premium.
+              </h2>
+              <p class="section-lead mb-4">
+                60 años navegando Mallorca con una operación cuidada, elegante y accesible.
+                La experiencia se siente: desde el primer scroll hasta la reserva.
+              </p>
+
+              <div class="bullet">
+                <i class="bi bi-award"></i>
+                <div>
+                  <div class="fw-extrabold">Una firma reconocible</div>
+                  <div class="text-secondary fw-semibold">Detalles discretos, calidad constante.</div>
+                </div>
+              </div>
+              <div class="bullet">
+                <i class="bi bi-shield-check"></i>
+                <div>
+                  <div class="fw-extrabold">Seguridad sin ruido</div>
+                  <div class="text-secondary fw-semibold">Protocolos claros y tripulación experta.</div>
+                </div>
+              </div>
+              <div class="bullet">
+                <i class="bi bi-brightness-alt-high"></i>
+                <div>
+                  <div class="fw-extrabold">El momento icónico</div>
+                  <div class="text-secondary fw-semibold">Amanecer con delfines: la estrella de Robinson.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6 reveal">
+          <div class="editorial h-100">
+            <div class="editorial-media"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA (2/2): mid-page, limpio -->
+      <div class="mt-4 reveal">
+        <div class="cta-clean">
+          <div class="row align-items-center g-3">
+            <div class="col-12 col-lg-8">
+              <h3 class="font-display fw-extrabold mb-1">Amanecer con delfines, sin perder elegancia.</h3>
+              <p class="mb-0" style="color:rgba(255,255,255,.82); font-weight:650;">
+                Salida suave, luz dorada y un encuentro memorable. Pregunta por disponibilidad.
+              </p>
+            </div>
+            <div class="col-12 col-lg-4 text-lg-end">
+              <a class="btn btn-light fw-extrabold rounded-4 px-4 py-3" href="#contacto">
+                Quiero reservar <i class="bi bi-arrow-right-short"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCIAS (catálogo mobile, minimal) -->
+  <section id="experiencias" class="section-pad">
+    <div class="container">
+      <div class="reveal">
+        <h2 class="font-display fw-extrabold section-title mb-2">Nuestras experiencias</h2>
+        <p class="section-lead mb-0">
+          Un catálogo premium en móvil: fotos potentes, texto breve y CTA claro.
+        </p>
+      </div>
+
+      <div class="mt-4 xscroll">
+        <!-- 1 -->
+        <article class="xitem reveal">
+          <div class="exp-media" style="background-image:url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1600&q=80');">
+            <span class="exp-tag"><i class="bi bi-wind"></i> Catamarán a vela</span>
+          </div>
+          <div class="exp-body">
+            <h3 class="font-display fw-extrabold mb-2">Catamarán a vela</h3>
+            <p class="text-secondary fw-semibold mb-3">
+              Viento, mar y calma. La ruta para desconectar con estilo.
+            </p>
+            <a class="btn btn-outline-dark rounded-4 fw-extrabold" href="#contacto">
+              Consultar <i class="bi bi-arrow-right-short"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="xitem reveal">
+          <div class="exp-media" style="background-image:url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80');">
+            <span class="exp-tag"><i class="bi bi-brightness-alt-high"></i> Delfines</span>
+          </div>
+          <div class="exp-body">
+            <h3 class="font-display fw-extrabold mb-2">Amanecer con delfines</h3>
+            <p class="text-secondary fw-semibold mb-3">
+              Luz dorada y avistamiento: el momento icónico de Robinson.
+            </p>
+            <a class="btn btn-outline-dark rounded-4 fw-extrabold" href="#contacto">
+              Reservar <i class="bi bi-arrow-right-short"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="xitem reveal">
+          <div class="exp-media" style="background-image:url('https://images.unsplash.com/photo-1511316695145-4992006ffddb?auto=format&fit=crop&w=1600&q=80');">
+            <span class="exp-tag"><i class="bi bi-flag"></i> Pirata</span>
+          </div>
+          <div class="exp-body">
+            <h3 class="font-display fw-extrabold mb-2">Barco pirata Robinson</h3>
+            <p class="text-secondary fw-semibold mb-3">
+              Dinámica, divertida y cuidada: ideal para familias.
+            </p>
+            <a class="btn btn-outline-dark rounded-4 fw-extrabold" href="#contacto">
+              Consultar <i class="bi bi-arrow-right-short"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article class="xitem reveal">
+          <div class="exp-media" style="background-image:url('https://images.unsplash.com/photo-1515542706656-8e6ef17a1521?auto=format&fit=crop&w=1600&q=80');">
+            <span class="exp-tag"><i class="bi bi-sunset"></i> Atardecer</span>
+          </div>
+          <div class="exp-body">
+            <h3 class="font-display fw-extrabold mb-2">Atardecer en catamarán</h3>
+            <p class="text-secondary fw-semibold mb-3">
+              Golden hour, brisa suave y fotos de postal.
+            </p>
+            <a class="btn btn-outline-dark rounded-4 fw-extrabold" href="#contacto">
+              Reservar <i class="bi bi-arrow-right-short"></i>
+            </a>
+          </div>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- REDES (embebidas tipo galería, sin extras) -->
+  <section id="social" class="section-pad">
+    <div class="container">
+      <div class="row g-4 align-items-end">
+        <div class="col-12 col-lg-5 reveal">
+          <h2 class="font-display fw-extrabold section-title mb-2">Redes sociales</h2>
+          <p class="section-lead mb-0">
+            Previsualización elegante. En producción reemplazas cada tile por embed real o feed oficial.
+          </p>
+        </div>
+        <div class="col-12 col-lg-7 reveal">
+          <div class="social-wall">
+            <a class="social-tile" href="#" aria-label="Post 1">
+              <div class="img" style="background-image:url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=80')"></div>
+              <div class="social-meta"><span><i class="bi bi-heart-fill"></i> 3.2k</span><span><i class="bi bi-chat-dots-fill"></i> 148</span></div>
+            </a>
+            <a class="social-tile" href="#" aria-label="Post 2">
+              <div class="img" style="background-image:url('https://images.unsplash.com/photo-1528150177508-7cc0c36cda5b?auto=format&fit=crop&w=900&q=80')"></div>
+              <div class="social-meta"><span><i class="bi bi-heart-fill"></i> 2.1k</span><span><i class="bi bi-chat-dots-fill"></i> 93</span></div>
+            </a>
+            <a class="social-tile" href="#" aria-label="Post 3">
+              <div class="img" style="background-image:url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=900&q=80')"></div>
+              <div class="social-meta"><span><i class="bi bi-heart-fill"></i> 4.8k</span><span><i class="bi bi-chat-dots-fill"></i> 221</span></div>
+            </a>
+            <a class="social-tile" href="#" aria-label="Post 4">
+              <div class="img" style="background-image:url('https://images.unsplash.com/photo-1511316695145-4992006ffddb?auto=format&fit=crop&w=900&q=80')"></div>
+              <div class="social-meta"><span><i class="bi bi-heart-fill"></i> 1.9k</span><span><i class="bi bi-chat-dots-fill"></i> 77</span></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UBICACIÓN (limpio) -->
+  <section id="ubicacion" class="section-pad">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-12 col-lg-5 reveal">
+          <h2 class="font-display fw-extrabold section-title mb-2">Ubicación</h2>
+          <p class="section-lead">
+            Ajusta el puerto exacto. El layout ya está listo para verse premium sin recargar.
+          </p>
+
+          <div class="panel p-3 p-sm-4">
+            <div class="fw-extrabold mb-1"><i class="bi bi-pin-map"></i> Punto de salida</div>
+            <div class="text-secondary fw-semibold">Puerto (ejemplo), Mallorca — reemplazar por dirección real.</div>
+            <hr class="my-3" />
+            <a class="btn btn-dark rounded-4 fw-extrabold px-4 py-3" href="#contacto">
+              Consultar horarios <i class="bi bi-arrow-right-short"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-7 reveal">
+          <div class="panel overflow-hidden">
+            <div class="ratio ratio-16x9">
+              <iframe
+                title="Mapa Mallorca"
+                src="https://www.google.com/maps?q=Palma%20de%20Mallorca&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO (limpio, mobile-first) -->
+  <section id="contacto" class="section-pad">
+    <div class="container">
+      <div class="row g-4 align-items-stretch">
+        <div class="col-12 col-lg-6 reveal">
+          <h2 class="font-display fw-extrabold section-title mb-2">Contacto</h2>
+          <p class="section-lead">Reserva en minutos. Directo, elegante y sin pasos innecesarios.</p>
+
+          <div class="panel p-3 p-sm-4">
+            <form id="contactForm" class="row g-3">
+              <div class="col-12">
+                <label class="form-label fw-bold">Nombre</label>
+                <input class="form-control form-control-lg rounded-4" name="name" placeholder="Tu nombre" required>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold">WhatsApp / Teléfono</label>
+                <input class="form-control form-control-lg rounded-4" name="phone" placeholder="+34 ..." required>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold">Experiencia</label>
+                <select class="form-select form-select-lg rounded-4" name="experience" required>
+                  <option value="" selected disabled>Elige una</option>
+                  <option>Catamarán a vela</option>
+                  <option>Amanecer con delfines</option>
+                  <option>Barco pirata Robinson</option>
+                  <option>Atardecer en catamarán</option>
+                </select>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold">Fecha</label>
+                <input type="date" class="form-control form-control-lg rounded-4" name="date" required>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold">Personas</label>
+                <input type="number" min="1" class="form-control form-control-lg rounded-4" name="people" placeholder="2" required>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label fw-bold">Mensaje</label>
+                <textarea class="form-control rounded-4" rows="4" name="message" placeholder="Cuéntanos lo que buscas (delfines, atardecer, familia...)"></textarea>
+              </div>
+
+              <div class="col-12 d-grid gap-2">
+                <button class="btn btn-dark btn-lg rounded-4 fw-extrabold" type="submit">
+                  Enviar solicitud <i class="bi bi-send"></i>
+                </button>
+                <a class="btn btn-outline-dark btn-lg rounded-4 fw-extrabold" id="whatsBtn" href="#" target="_blank" rel="noopener">
+                  Hablar por WhatsApp <i class="bi bi-whatsapp"></i>
+                </a>
+              </div>
+
+              <div class="col-12">
+                <div id="formToast" class="alert alert-success rounded-4 d-none mb-0" role="alert">
+                  Listo ✅ (demo). Aquí conectarías tu backend / CRM.
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6 reveal">
+          <div class="panel overflow-hidden h-100">
+            <div class="ratio ratio-4x3">
+              <div style="
+                background:
+                  linear-gradient(180deg, rgba(11,18,32,.12), rgba(11,18,32,.58)),
+                  url('https://images.unsplash.com/photo-1515542706656-8e6ef17a1521?auto=format&fit=crop&w=2200&q=80') center/cover no-repeat;">
+              </div>
+            </div>
+            <div class="p-3 p-sm-4">
+              <div class="fw-extrabold font-display">Robinson</div>
+              <div class="text-secondary fw-semibold">Mallorca · Catamarán · Delfines</div>
+              <hr class="my-3">
+              <div class="text-secondary fw-semibold">
+                Consejo: cuando tengas fotos reales (delfines, catamarán, puerto), esta web se vuelve “de marca” sin añadir componentes.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER (simple) -->
+  <footer class="py-5">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+        <div>
+          <div class="d-flex align-items-center gap-2">
+            <span class="brand-mark"><i class="bi bi-compass" style="color:var(--ink)"></i></span>
+            <div class="font-display fw-extrabold">Robinson</div>
+          </div>
+          <div class="text-secondary fw-semibold mt-2">
+            60 años de experiencia · Mallorca, España
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 flex-wrap">
+          <a class="btn btn-outline-dark rounded-4 fw-extrabold" href="#inicio">Arriba <i class="bi bi-arrow-up"></i></a>
+          <a class="btn btn-dark rounded-4 fw-extrabold" href="#contacto">Reservar <i class="bi bi-arrow-right-short"></i></a>
+        </div>
+      </div>
+
+      <hr class="my-4">
+
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <small class="text-secondary fw-semibold">© Robinson. Demo — estilo sofisticado & fresco.</small>
+        <small class="text-secondary fw-semibold">Bootstrap 5.3.8</small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp floating -->
+  <a class="wa-float"
+     href="https://wa.me/34600000000?text=Hola%20Robinson%2C%20quiero%20reservar%20una%20experiencia%20en%20Mallorca."
+     target="_blank" rel="noopener" aria-label="WhatsApp">
+    <i class="bi bi-whatsapp fs-3"></i>
+  </a>
+
+  <!-- Mobile sticky booking bar -->
+  <div class="sticky-book">
+    <button class="btn-book" onclick="document.querySelector('#contacto').scrollIntoView({behavior:'smooth'})">
+      Reservar <i class="bi bi-arrow-right-short"></i>
+    </button>
+    <a class="btn-mini" href="#experiencias">
+      Ver <i class="bi bi-grid"></i>
+    </a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+          crossorigin="anonymous"></script>
+
+  <script>
+    // Nav shadow on scroll
+    const nav = document.querySelector('.nav-glass');
+    const onScroll = () => {
+      if (window.scrollY > 8) nav.classList.add('nav-scrolled');
+      else nav.classList.remove('nav-scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Reveal animations
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries){
+        if (e.isIntersecting){
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      }
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+
+    // Contact (demo) + WhatsApp deep-link from form
+    const form = document.getElementById('contactForm');
+    const toast = document.getElementById('formToast');
+    const whatsBtn = document.getElementById('whatsBtn');
+
+    const buildWhats = () => {
+      const fd = new FormData(form);
+      const msg = `Hola Robinson, quiero reservar:
+- Nombre: ${fd.get('name') || ''}
+- Teléfono: ${fd.get('phone') || ''}
+- Experiencia: ${fd.get('experience') || ''}
+- Fecha: ${fd.get('date') || ''}
+- Personas: ${fd.get('people') || ''}
+- Nota: ${fd.get('message') || ''}`.trim();
+      whatsBtn.href = "https://wa.me/34600000000?text=" + encodeURIComponent(msg);
+    };
+
+    form.addEventListener('input', buildWhats);
+    buildWhats();
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      toast.classList.remove('d-none');
+      setTimeout(() => toast.classList.add('d-none'), 3500);
+    });
+  </script>
+
+</body>
+</html>
